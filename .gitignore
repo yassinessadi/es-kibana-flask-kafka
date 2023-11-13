@@ -1,3 +1,4 @@
-~/consumer/checkpointLocation
-~/api/__pycache__
+consumer/checkpointLocation/
+api/__pycache__/
+
 
