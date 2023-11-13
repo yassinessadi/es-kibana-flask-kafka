@@ -51,9 +51,9 @@ def movie_by_id(movie_id):
 
 
 
-@app.route('/<name>', methods=["GET"])
-def index(name):
-    return render_template("index.html",context=name)
+@app.route('/', methods=["GET"])
+def index():
+    return render_template("index.html", content=movies_source)
 
 
 
