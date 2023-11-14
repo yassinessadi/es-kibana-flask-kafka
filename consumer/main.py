@@ -17,7 +17,7 @@ spark = SparkSession.builder \
 df = spark.readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "localhost:9092") \
-  .option("subscribe", "jane_essadi") \
+  .option("subscribe", "moviesdb_essadi") \
   .option("startingOffsets", "earliest") \
   .load()
 
@@ -73,26 +73,15 @@ result_df = selected_df.select(
     F.col("values.title").alias("title"),
     F.col("values.video").alias("video"),
     F.col("values.vote_average").alias("vote_average"),
+    F.col("values.release_date").alias("release_date"),
     F.col("values.vote_count").alias("vote_count"),
 )
-
-
-# Write the DataFrame to an Elasticsearch index
-# reader = spark.read.format("org.elasticsearch.spark.sql") \
-#     .option("es.resource", "index/type") \
-#     .option("es.nodes.wan.only", "true") \
-#     .option("es.nodes", "localhost") \
-#     .option("es.port", "9200") \
-#     .option("es.net.ssl", "false") \
-#     .option("es.net.http.auth.user", "elastic") \
-#     .option("es.net.http.auth.pass", "jane_essadi") \
-#     .load()
 
 
 query = result_df.writeStream \
     .format("org.elasticsearch.spark.sql") \
     .outputMode("append") \
-    .option("es.resource", "movies") \
+    .option("es.resource", "moviesdb") \
     .option("es.nodes", "localhost") \
     .option("es.port", "9200") \
     .option("es.nodes.wan.only", "true")\
