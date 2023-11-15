@@ -3,7 +3,7 @@ from confluent_kafka import Producer
 import time
 import json
 
-topic = "moviesdb_essadi"
+topic = "topic_moviedb_details"
 kafka_config = {
     "bootstrap.servers": "localhost:9092",  # Change this to your Kafka server address
 }
@@ -12,7 +12,7 @@ producer = Producer(kafka_config)
 
 counter = 3
 while True:
-    url = f"https://api.themoviedb.org/3/movie/{counter}?api_key=166d5fe76b80ebd8dfa5158f8dc108a7"
+    url = f"https://api.themoviedb.org/3/movie/{counter}?api_key=******fe76b80ebd8dfa5158f8dc108a7"
     headers = {
         "accept": "application/json"
     }

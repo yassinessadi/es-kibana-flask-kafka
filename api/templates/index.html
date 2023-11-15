@@ -25,19 +25,26 @@
             <div class="row row-cols-4 mt-3">
                 {% for movie in movies %}
                 <div class="col">
-                    <div class="card mb-3" style="max-width: 540px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="https://picsum.photos/200/300" class="img-fluid rounded-start" alt="...">
+                    <div class="card mt-2" style="width: 20rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ movie._source.title[0:30] }}</h5>
+                        <p class="card-text">{{ movie._source.overview[0:70] }} .</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">release date: {{ movie._source.release_date }}</li>
+                        <li class="list-group-item">
+                            <div>
+                                <span>genres:</span>
+                                {% for genres in movie._source.genres_name %}
+                                <span>{{ genres }} ,</span>
+                                {% endfor %}
                             </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ movie._source.title }}</h5>
-                                    <p class="card-text">{{ movie._source.overview[0:60] }}</p>
-                                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
-                                </div>
-                            </div>
-                        </div>
+                        </li>
+                        <li class="list-group-item">language : {{movie._source.original_language }}</li>
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="btn btn-primary">Details</a>
+                    </div>
                     </div>
                 </div>
                 {% endfor %}
