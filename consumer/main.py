@@ -38,6 +38,7 @@ schema = StructType([
     ])), True),
     StructField("original_language", StringType(), True),
     StructField("original_title", StringType(), True),
+    StructField("poster_path", StringType(), True),
     StructField("overview", StringType(), True),
     StructField("popularity", FloatType(), True),
     StructField("production_companies", ArrayType(StructType([
@@ -77,6 +78,7 @@ result_df = selected_df.select(
     F.col("values.vote_average").alias("vote_average"),
     F.col("values.release_date").alias("release_date"),
     F.col("values.vote_count").alias("vote_count"),
+    F.col("values.poster_path").alias("poster_path"),
 )
 
 

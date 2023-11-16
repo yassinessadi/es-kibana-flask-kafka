@@ -12,7 +12,7 @@ producer = Producer(kafka_config)
 
 counter = 3
 while True:
-    url = f"https://api.themoviedb.org/3/movie/{counter}?api_key=******fe76b80ebd8dfa5158f8dc108a7"
+    url = f"https://api.themoviedb.org/3/movie/{counter}?api_key=166d5fe76b80ebd8dfa5158f8dc108a7"
     headers = {
         "accept": "application/json"
     }
@@ -21,7 +21,7 @@ while True:
     if response.status_code == 200:
         data = json.dumps(response.json())
         producer.produce(topic, key="moviedb", value=data)
-        time.sleep(10)
+        time.sleep(1)
         producer.flush()
         print(response.json())
     else:

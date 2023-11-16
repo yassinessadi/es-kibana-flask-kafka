@@ -21,7 +21,7 @@ def get_movies():
             }
         }
     }
-    result = client.search(index='movies_index', body=query)
+    result = client.search(index='movies_index', body=query,size=10)
     return result['hits']['hits']
 
 
