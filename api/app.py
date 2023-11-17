@@ -15,16 +15,19 @@ client = Elasticsearch(
     "http://localhost:9200",  # Elasticsearch endpoint
     )
 
-# def get_movies():
-#     query = {
-#         "query": {
-#              "match_all": {
-#             }
-#         }
-#     }
-#     result = client.search(index='movies_index', body=query,size=30)
-#     return result['hits']['hits']
+def get_all_movies():
+    query = {
+        "query": {
+             "match_all": {}
+        }
+    }
+    result = client.search(index='movies_index', body=query)
+    total_movies = result['hits']['total']['value']
+    return total_movies
+
 def get_movies(page=1, size=10):
+    if page == 0:
+       page = 1
     query = {
         "query": {
              "match_all": {}
@@ -66,13 +69,13 @@ def get_movie(movie_id):
 
 @app.route('/', methods=['GET'])
 def index():
-    movies = get_movies()
+    page = int(request.args.get('page', 1))
+    size = int(request.args.get('size', 10))
+    movies = get_movies(page,size)
     top_movies = get_top_movies()
-    return render_template("index.html",movies=movies,top_movies=top_movies)
-
-
-
-    
+    total_movies = get_all_movies()
+    total_pages = ceil(total_movies / size)
+    return render_template("index.html",movies=movies,top_movies=top_movies, page=page, size=size, total_pages=total_pages)    
 
 if __name__ == '__main__':
     app.run(debug=True)
