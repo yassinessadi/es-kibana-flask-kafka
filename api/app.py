@@ -25,12 +25,14 @@ def get_all_movies():
     total_movies = result['hits']['total']['value']
     return total_movies
 
+
+
 def get_movies(page=1, size=10):
-    if page == 0:
-       page = 1
+    if page <= 0:
+        page = 1
     query = {
         "query": {
-             "match_all": {}
+            "match_all": {}
         },
         "from": (page - 1) * size,
         "size": size
@@ -70,6 +72,8 @@ def get_movie(movie_id):
 @app.route('/', methods=['GET'])
 def index():
     page = int(request.args.get('page', 1))
+    if(page <= 0):
+       page = 1
     size = int(request.args.get('size', 10))
     movies = get_movies(page,size)
     top_movies = get_top_movies()
