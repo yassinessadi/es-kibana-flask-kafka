@@ -81,5 +81,24 @@ def index():
     total_pages = ceil(total_movies / size)
     return render_template("index.html",movies=movies,top_movies=top_movies, page=page, size=size, total_pages=total_pages)    
 
+
+@app.route('/search', methods=['POST'])
+def search():
+    query = request.form.get('query')
+
+     # Elasticsearch query to search by title
+    es_query = {
+        "query": {
+            "match": {
+                "title": query
+            }
+        }
+    }
+    top_movies = get_top_movies()
+    # Search using Elasticsearch
+    results = client.search(index='movies_index', body=es_query,size=1000)
+    search_results = results['hits']['hits']
+    return render_template("search.html",search_results=search_results,top_movies=top_movies)
+
 if __name__ == '__main__':
     app.run(debug=True)
